@@ -1,0 +1,803 @@
+
+        :root {
+            --blue-primary: #2563eb;
+            --blue-dark: #1d4ed8;
+            --dark-bg: #07090e;
+            --dark-surface: #0f131d;
+            --dark-card: rgba(18, 24, 38, 0.88);
+            --dark-border: rgba(255, 255, 255, 0.08);
+            --text-muted: #94a3b8;
+        }
+
+        /* reset */
+        .tentang-root {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background-color: var(--dark-bg) !important;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #ffffff;
+            overflow: hidden !important;
+        }
+
+        /* pattern */
+        .manga-panel-pattern {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                radial-gradient(rgba(255, 255, 255, 0.06) 1.2px, transparent 1.2px),
+                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 26px 26px, 120px 120px, 120px 120px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* container 3 slide */
+        .fullpage-scroll-container {
+            width: 100vw;
+            height: calc(100vh - 65px);
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            position: relative;
+            z-index: 5;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .fullpage-scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .fullpage-slide-section {
+            width: 100vw;
+            height: calc(100vh - 65px);
+            min-height: calc(100vh - 65px);
+            max-height: calc(100vh - 65px);
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+            background-color: var(--dark-bg);
+            display: flex;
+            align-items: center;
+        }
+
+        /* INDIKATOR 3 TITIK VERTIKAL KANAN */
+        .vertical-dots-nav {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 999;
+        }
+        .v-dot-item {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .v-dot-item.active {
+            height: 28px;
+            border-radius: 20px;
+            background: var(--blue-primary);
+        }
+
+        /* slide 1 */
+        .slide-1-grid {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1.25fr 1fr;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
+        }
+
+        .slide-1-img-col {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: hidden;
+            padding-bottom: 25px;
+            box-sizing: border-box;
+        }
+
+        .hero-team-img {
+            height: 88%;
+            max-height: 90%;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
+            object-position: bottom center;
+            filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.9));
+            transform: translateY(60px);
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+            position: relative;
+            z-index: 5;
+        }
+
+        .fullpage-slide-section.active .hero-team-img {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .trio-indicator-dots {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        .t-dot {
+            width: 9px;
+            height: 9px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+        }
+        .t-dot.active {
+            width: 24px;
+            background: var(--blue-primary);
+            border-radius: 20px;
+        }
+
+        .slide-1-text-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 80px 0 20px;
+            z-index: 5;
+        }
+
+        .slide-1-text-col h1 {
+            font-size: clamp(2.3rem, 3.8vw, 3.6rem);
+            font-weight: 900;
+            line-height: 1.15;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            margin: 0 0 18px 0;
+            color: #ffffff;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+        }
+        .slide-1-text-col h1 span {
+            color: var(--blue-primary);
+        }
+
+        .slide-1-text-col p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            max-width: 520px;
+            margin: 0 0 32px 0;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
+        }
+
+        .btn-blue-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--blue-primary);
+            color: #ffffff;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.25s ease;
+            width: fit-content;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s;
+        }
+        .btn-blue-action:hover {
+            background: var(--blue-dark);
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        .fullpage-slide-section.active .slide-1-text-col h1,
+        .fullpage-slide-section.active .slide-1-text-col p,
+        .fullpage-slide-section.active .btn-blue-action {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* slide 2 */
+        .slide-2-grid {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
+        }
+
+        .slide-2-card-col {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 60px 0 80px;
+            z-index: 15;
+        }
+
+        .glass-intro-card {
+            background: var(--dark-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            padding: 45px 42px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+            position: relative;
+            max-width: 480px;
+            transform: translateX(-50px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+        }
+
+        .fullpage-slide-section.active .glass-intro-card {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .glass-intro-card h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 4px 0;
+            line-height: 1.1;
+        }
+        .glass-intro-card h2 span {
+            color: var(--blue-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            display: block;
+            margin-top: 6px;
+        }
+
+        .glass-intro-card p {
+            color: #cbd5e1;
+            font-size: 0.96rem;
+            line-height: 1.7;
+            margin: 20px 0 30px 0;
+        }
+
+        .circular-bph-badge {
+            position: absolute;
+            bottom: -25px;
+            right: 35px;
+            background: var(--blue-primary);
+            color: #ffffff;
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.05rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            border: 3px solid var(--dark-bg);
+            z-index: 20;
+        }
+        .circular-bph-badge span {
+            font-size: 0.65rem;
+            font-weight: 700;
+            opacity: 0.9;
+        }
+
+        .slide-2-img-col {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .curved-blue-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #1e3a8a, rgba(37, 99, 235, 0.4));
+            border-top-left-radius: 260px;
+            border-bottom-left-radius: 40px;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        .lead-big-img {
+            height: 92%;
+            max-height: 94%;
+            width: auto;
+            object-fit: contain;
+            object-position: bottom center;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.85));
+            position: relative;
+            z-index: 5;
+            transform: translateY(60px);
+            opacity: 0;
+            transition: all 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+        }
+
+        .fullpage-slide-section.active .lead-big-img {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* slide 3 */
+        .slide-3-grid {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
+        }
+
+        .slide-3-blue-col {
+            background: linear-gradient(175deg, #1e40af, #1d4ed8, #0f172a);
+            height: 100%;
+            padding: 70px 40px 50px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 10;
+        }
+
+        .slide-3-blue-col h2 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3.4rem;
+            line-height: 0.95;
+            letter-spacing: 2px;
+            margin: 10px 0 0 0;
+            color: #ffffff;
+        }
+
+        .slide-3-blue-col p {
+            font-size: 0.92rem;
+            color: #bfdbfe;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Navigasi Panah Geser Kartu */
+        .cards-scroll-controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .btn-card-nav {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-card-nav:hover {
+            background: var(--blue-primary);
+            transform: scale(1.08);
+        }
+
+        .slide-3-cards-col {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 60px 0 35px;
+            gap: 22px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            box-sizing: border-box;
+            /* Scrollbar halus agar user tahu kartu bisa digeser */
+            scrollbar-width: thin;
+            scrollbar-color: var(--blue-primary) rgba(255, 255, 255, 0.05);
+        }
+        .slide-3-cards-col::-webkit-scrollbar {
+            height: 6px;
+            display: block;
+        }
+        .slide-3-cards-col::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        .slide-3-cards-col::-webkit-scrollbar-thumb {
+            background: var(--blue-primary);
+            border-radius: 10px;
+        }
+
+        /* Grab-to-scroll ala galeri: kursor grab + cegah seleksi saat drag */
+        .slide-3-cards-col { cursor: grab; }
+        .slide-3-cards-col.is-dragging {
+            cursor: grabbing;
+            scroll-behavior: auto;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .slide-3-cards-col.is-dragging img { pointer-events: none; }
+        .slide-3-cards-col:focus { outline: none; }
+        .slide-3-cards-col:focus-visible {
+            outline: 2px solid rgba(37, 99, 235, 0.5);
+            outline-offset: -2px;
+            border-radius: 12px;
+        }
+
+        .division-card-box {
+            flex: 0 0 240px;
+            height: 74%;
+            border-radius: 22px;
+            position: relative;
+            overflow: hidden;
+            background: #0d121f;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 22px;
+            box-sizing: border-box;
+            cursor: pointer;
+            transform: translateY(40px);
+            opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, border-color 0.25s ease;
+        }
+
+        /* PERBAIKAN: SEMUA KARTU (1 s/d 8) DIBUAT TAMPIL OTOMATIS */
+        .fullpage-slide-section.active .division-card-box {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .division-card-box:nth-child(1) { transition-delay: 0.05s; }
+        .division-card-box:nth-child(2) { transition-delay: 0.1s; }
+        .division-card-box:nth-child(3) { transition-delay: 0.15s; }
+        .division-card-box:nth-child(4) { transition-delay: 0.2s; }
+        .division-card-box:nth-child(5) { transition-delay: 0.25s; }
+        .division-card-box:nth-child(6) { transition-delay: 0.3s; }
+        .division-card-box:nth-child(7) { transition-delay: 0.35s; }
+        .division-card-box:nth-child(8) { transition-delay: 0.4s; }
+
+        .division-card-box:hover {
+            transform: translateY(-8px) !important;
+            border-color: var(--blue-primary);
+        }
+
+        .char-img-inner {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 85%;
+            object-fit: cover;
+            object-position: top center;
+            z-index: 1;
+            transition: transform 0.4s ease;
+        }
+        .division-card-box:hover .char-img-inner {
+            transform: translateX(-50%) scale(1.06);
+        }
+
+        .division-card-box::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(7, 9, 14, 0.98) 0%, rgba(7, 9, 14, 0.6) 45%, transparent 85%);
+            z-index: 2;
+        }
+
+        .division-caption {
+            position: relative;
+            z-index: 5;
+        }
+
+        .division-caption .d-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--blue-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .division-caption h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0;
+            line-height: 1.25;
+        }
+
+        .d-bookmark {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 6;
+            color: #cbd5e1;
+            font-size: 1.1rem;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+        .division-card-box:hover .d-bookmark {
+            color: var(--blue-primary);
+            transform: scale(1.15);
+        }
+
+        /* RESPONSIVE HP (desktop tidak diubah):
+           1) Tiap slide = 1 layar + snap mandatory seperti desktop;
+              konten panjang discroll di dalam slide (tidak terpotong).
+           2) Semua animasi entrance dipaksa tampil supaya konten SELALU
+              terlihat walau observer mencabut .active.
+           3) Slide 1: banner biru + foto di atas, teks di bawah.
+           4) Slide 2: foto ketua di atas, kartu di bawah (tidak disembunyikan). */
+        @media (max-width: 992px) {
+            .fullpage-scroll-container {
+                height: calc(100vh - 65px);
+                height: calc(100dvh - 65px);
+                /* Scroll per slide seperti desktop (mandatory, 1 layar per slide) */
+                scroll-snap-type: y mandatory;
+            }
+            .fullpage-slide-section {
+                width: 100%;
+                /* Tiap slide = 1 layar penuh seperti desktop; konten yang lebih
+                   panjang discroll di dalam slide-nya sendiri (tidak terpotong) */
+                height: calc(100vh - 65px);
+                height: calc(100dvh - 65px);
+                min-height: calc(100vh - 65px);
+                min-height: calc(100dvh - 65px);
+                max-height: calc(100vh - 65px);
+                max-height: calc(100dvh - 65px);
+                overflow-y: auto;
+                overflow-x: hidden;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+                align-items: flex-start;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            .fullpage-slide-section::-webkit-scrollbar {
+                display: none;
+            }
+            .hero-team-img,
+            .lead-big-img,
+            .glass-intro-card,
+            .division-card-box,
+            .slide-1-text-col h1,
+            .slide-1-text-col p,
+            .btn-blue-action {
+                transform: none !important;
+                opacity: 1 !important;
+            }
+
+            /* --- SLIDE 1: banner biru + foto di atas, teks di bawah --- */
+            .slide-1-grid,
+            .slide-2-grid,
+            .slide-3-grid {
+                grid-template-columns: 1fr;
+            }
+            .slide-1-img-col {
+                order: 0;
+                height: auto;
+                min-height: 0;
+                display: block;
+                text-align: center;
+                background: linear-gradient(175deg, #172554 0%, #1d4ed8 55%, #1e40af 100%);
+                padding: 22px 20px 18px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .hero-team-img {
+                display: inline-block;
+                vertical-align: middle;
+                min-width: 0;
+                min-height: 0;
+                width: auto;
+                height: auto;
+                max-width: 90%;
+                max-height: 34vh;
+                object-position: center;
+            }
+            .trio-indicator-dots {
+                display: none;
+            }
+            .slide-1-text-col {
+                order: 1;
+                justify-content: flex-start;
+                padding: 32px 22px 0;
+            }
+            .slide-1-text-col h1 {
+                font-size: clamp(1.55rem, 6vw, 2.3rem);
+                margin-bottom: 14px;
+            }
+            .slide-1-text-col p {
+                font-size: 0.95rem;
+                margin-bottom: 26px;
+            }
+            .btn-blue-action {
+                padding: 12px 26px;
+                font-size: 0.9rem;
+            }
+
+            /* --- SLIDE 2: foto ketua di atas, kartu di bawah --- */
+            .slide-2-card-col {
+                order: 1;
+                justify-content: flex-start;
+                align-items: stretch;
+                padding: 12px 22px 36px;
+            }
+            .glass-intro-card {
+                max-width: 100%;
+                padding: 32px 24px 40px;
+            }
+            .glass-intro-card h2 {
+                font-size: 1.5rem;
+            }
+            .glass-intro-card p {
+                font-size: 0.95rem;
+            }
+            .circular-bph-badge {
+                width: 58px;
+                height: 58px;
+                right: 16px;
+                font-size: 0.85rem;
+            }
+            .slide-2-img-col {
+                order: 0;
+                display: block;
+                text-align: center;
+                height: auto;
+                min-height: 0;
+                overflow: hidden;
+                padding: 26px 18px 12px;
+            }
+            .curved-blue-bg {
+                border-radius: 26px 26px 12px 12px;
+                border-left: none;
+            }
+            .lead-big-img {
+                display: inline-block;
+                vertical-align: middle;
+                min-width: 0;
+                min-height: 0;
+                width: auto;
+                height: auto;
+                max-width: 84%;
+                max-height: 38vh;
+                object-position: center;
+            }
+
+            /* --- SLIDE 3: blok biru di atas, kartu geser di bawah --- */
+            .slide-3-blue-col {
+                height: auto;
+                padding: 32px 22px 14px;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .slide-3-blue-col h2 {
+                font-size: clamp(1.9rem, 9vw, 2.6rem);
+            }
+            .cards-scroll-controls {
+                margin-top: 14px;
+            }
+            .btn-card-nav {
+                width: 38px;
+                height: 38px;
+            }
+            .slide-3-cards-col {
+                height: 46vh;
+                min-height: 380px;
+                align-items: stretch;
+                padding: 14px 22px 24px;
+                gap: 16px;
+            }
+            .division-card-box {
+                flex: 0 0 64vw;
+                max-width: 260px;
+                padding: 18px 16px;
+            }
+
+            /* Dots navigasi lebih kecil agar tidak menutupi konten */
+            .vertical-dots-nav {
+                right: 12px;
+                gap: 9px;
+            }
+            .v-dot-item {
+                width: 7px;
+                height: 7px;
+            }
+            .v-dot-item.active {
+                height: 22px;
+            }
+        }
+        @media (max-width: 420px) {
+            .hero-team-img {
+                max-height: 28vh;
+                max-width: 86%;
+            }
+            .lead-big-img {
+                max-height: 32vh;
+            }
+            .glass-intro-card h2 {
+                font-size: 1.3rem;
+            }
+            .slide-1-text-col {
+                padding: 28px 18px 0;
+            }
+            .slide-2-card-col {
+                padding-right: 18px;
+                padding-left: 18px;
+            }
+        }
+
+        /* LIGHT MODE â€” panel biru slide 3 & badge DPH tetap seperti semula */
+        html[data-theme="light"] {
+            --dark-bg: #f7f9fc;
+            --dark-surface: #ffffff;
+            --dark-card: rgba(255, 255, 255, 0.94);
+            --dark-border: rgba(15, 23, 42, 0.1);
+            --text-muted: #64748b;
+        }
+        html[data-theme="light"] .tentang-root { color: #0f172a; }
+        html[data-theme="light"] .manga-panel-pattern {
+            background-image:
+                radial-gradient(rgba(15, 23, 42, 0.07) 1.2px, transparent 1.2px),
+                linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+        }
+        html[data-theme="light"] .v-dot-item { background: rgba(15, 23, 42, 0.2); }
+        html[data-theme="light"] .t-dot { background: rgba(15, 23, 42, 0.18); }
+        html[data-theme="light"] .slide-1-text-col h1 { color: #0f172a; }
+        html[data-theme="light"] .hero-team-img,
+        html[data-theme="light"] .lead-big-img { filter: drop-shadow(0 20px 30px rgba(15, 23, 42, 0.25)); }
+        html[data-theme="light"] .glass-intro-card {
+            border-color: rgba(15, 23, 42, 0.12);
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
+        }
+        html[data-theme="light"] .glass-intro-card h2 { color: #0f172a; }
+        html[data-theme="light"] .glass-intro-card p { color: #475569; }
+        html[data-theme="light"] .division-card-box {
+            background: #ffffff;
+            border-color: rgba(15, 23, 42, 0.12);
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.1);
+        }
+        html[data-theme="light"] .division-card-box::after {
+            background: linear-gradient(to top, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.65) 45%, transparent 85%);
+        }
+        html[data-theme="light"] .division-caption h3 { color: #0f172a; }
+        html[data-theme="light"] .d-bookmark { color: #94a3b8; }
+        html[data-theme="light"] .division-card-box:hover .d-bookmark { color: var(--accent-red); }
+
+        /* Toggle tema pindah ke kanan bawah: pojok kiri bawah dipakai
+           tombol geser kartu pada panel biru slide 3 */
+        .theme-toggle-float { left: auto; right: 18px; }
+    
