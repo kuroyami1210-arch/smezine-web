@@ -83,6 +83,17 @@ body.loaded {
 	opacity: 1;
 }
 
+/* Pengaman: kalau JS gagal jalan (script diblokir/error), halaman tetap
+   muncul sendiri maksimal 1,5 dtk — tidak pernah blank hitam selamanya. */
+@keyframes smezine-force-visible {
+	to {
+		opacity: 1;
+	}
+}
+body {
+	animation: smezine-force-visible 0.2s ease 1.5s forwards;
+}
+
 /* Class saat mau pindah halaman (Hilang) */
 body.fade-out {
 	opacity: 0;
