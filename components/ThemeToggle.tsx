@@ -15,22 +15,32 @@ export default function ThemeToggle() {
     setTheme(currentTheme());
   }, []);
 
-  // Ngumpet pas scroll ke bawah, nongol lagi pas scroll ke atas / di atas
+  // Ngumpet pas scroll ke bawah, nongol lagi pas scroll ke atas / di atas.
+  // Mendengar scroll window (semua halaman, termasuk laptop) DAN scroll
+  // container dalam halaman Tentang (fullpage-scroll-container) yang
+  // scroll-nya tidak lewat window.
   useEffect(() => {
     const HIDE_AFTER = 120;
-    let lastY = window.scrollY || 0;
+    let lastWin = window.scrollY || 0;
+    let lastInner = 0;
     let ticking = false;
+    const innerOf = () =>
+      document.querySelector<HTMLElement>(".fullpage-scroll-container");
     const update = () => {
       ticking = false;
-      const y = window.scrollY || 0;
-      if (y <= HIDE_AFTER) {
+      const wy = window.scrollY || 0;
+      const iy = innerOf()?.scrollTop ?? 0;
+      const deep = wy > HIDE_AFTER || iy > HIDE_AFTER;
+      const goingDown = wy > lastWin || iy > lastInner;
+      if (!deep) {
         setHidden(false);
-      } else if (y > lastY) {
+      } else if (goingDown) {
         setHidden(true);
-      } else if (y < lastY) {
+      } else if (wy < lastWin || iy < lastInner) {
         setHidden(false);
       }
-      lastY = y;
+      lastWin = wy;
+      lastInner = iy;
     };
     const onScroll = () => {
       if (!ticking) {
@@ -39,7 +49,12 @@ export default function ThemeToggle() {
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const inner = innerOf();
+    inner?.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      inner?.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   const toggle = () => {
