@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 export type GaleriItem = {
   id: number;
@@ -28,6 +28,35 @@ export default function GaleriClient({ items }: { items: GaleriItem[] }) {
 
   const [grid, setGrid] = useState(false);
   const [light, setLight] = useState<number | null>(null);
+
+  // Jumlah kolom masonry responsif: laptop 4 / tablet 3 / HP 2.
+  // Default 4 agar render server == render pertama (tanpa hydration mismatch),
+  // dikoreksi sebelum paint via layout effect.
+  const [colCount, setColCount] = useState(4);
+  useLayoutEffect(() => {
+    const compute = () => {
+      if (window.matchMedia("(max-width: 640px)").matches) return 2;
+      if (window.matchMedia("(max-width: 1100px)").matches) return 3;
+      return 4;
+    };
+    const update = () => setColCount(compute());
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  // Bagi foto round-robin ke tiap kolom: urutan kiri-ke-kanan terjaga
+  // (4 foto = jajaran 4), tiap kolom menumpuk rapat sendiri tanpa
+  // terpengaruh tinggi kartu di kolom sebelah (masonry sejati).
+  const columns = useMemo(() => {
+    const n = Math.max(1, Math.min(colCount, total || 1));
+    const out: { item: GaleriItem; orig: number }[][] = Array.from(
+      { length: n },
+      () => [],
+    );
+    items.forEach((item, idx) => out[idx % n].push({ item, orig: idx }));
+    return out;
+  }, [items, colCount, total]);
   const trackRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef({ down: false, dragged: false, x: 0, scroll: 0 });
   const glideRef = useRef({ holding: 0, vel: 0, raf: 0 as number | null });
@@ -338,14 +367,18 @@ export default function GaleriClient({ items }: { items: GaleriItem[] }) {
         </div>
 
         <div className="gallery-masonry">
-          {items.map((foto, i) => (
-            <div className="masonry-card" key={foto.id} onClick={() => setLight(i)}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={foto.src} alt={foto.judul} loading="lazy" />
-              <div className="masonry-info">
-                <h5>{foto.judul}</h5>
-                {foto.deskripsi ? <p>{foto.deskripsi}</p> : null}
-              </div>
+          {columns.map((col, ci) => (
+            <div className="masonry-col" key={ci}>
+              {col.map(({ item: foto, orig }) => (
+                <div className="masonry-card" key={foto.id} onClick={() => setLight(orig)}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={foto.src} alt={foto.judul} loading="lazy" />
+                  <div className="masonry-info">
+                    <h5>{foto.judul}</h5>
+                    {foto.deskripsi ? <p>{foto.deskripsi}</p> : null}
+                  </div>
+                </div>
+              ))}
             </div>
           ))}
         </div>
