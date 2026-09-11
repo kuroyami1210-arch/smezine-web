@@ -25,6 +25,11 @@ if (supabaseHostname) {
 
 const nextConfig: NextConfig = {
   images: { remotePatterns },
+  // Upload gambar via Server Actions: default Next cuma 1MB (error 413
+  // "Body exceeded 1 MB limit"). Naikkan ke 4MB agar sesuai batas form
+  // (berita/galeri/anggota 2MB, slide1 4MB). Batas mutlak platform Vercel
+  // ~4,5MB — jangan set di atas itu.
+  experimental: { serverActions: { bodySizeLimit: "4mb" } },
 };
 
 export default nextConfig;
