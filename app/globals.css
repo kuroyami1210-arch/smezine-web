@@ -837,6 +837,18 @@ html[data-theme="light"] .theme-toggle-float {
 	box-shadow: 0 8px 24px rgba(180, 83, 9, 0.25);
 }
 
+/* Toggle ngumpet halus pas user scroll ke bawah (ala navbar),
+   nongol lagi pas scroll ke atas / balik ke atas halaman. */
+.theme-toggle-float {
+	transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, opacity 0.25s ease, visibility 0.25s ease;
+}
+.theme-toggle-float.theme-toggle-hidden {
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(14px);
+	pointer-events: none;
+}
+
 /* Kartu & grid global */
 html[data-theme="light"] .card,
 html[data-theme="light"] .home-news-card {
