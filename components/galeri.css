@@ -291,21 +291,24 @@
         .gallery-fullscreen-wrapper.grid-mode .slider-controls {
             display: none;
         }
+        /* mode grid: kolom tetap per device — laptop 4 / tablet 3 / HP 2.
+           Grup selalu di tengah (margin auto), lebar kolom sama rata,
+           tinggi tiap kartu ikut gambarnya (align-items: start). */
         .gallery-fullscreen-wrapper.grid-mode .gallery-masonry {
-            display: block;
-            column-count: 4;
-            column-gap: 22px;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            align-items: start;
+            gap: 22px;
             max-width: 1280px;
             margin: 0 auto;
             padding: 34px 24px 30px;
             box-sizing: border-box;
         }
         .masonry-card {
-            display: inline-block;
+            display: block;
             width: 100%;
-            break-inside: avoid;
-            -webkit-column-break-inside: avoid;
-            margin: 0 0 22px 0;
+            min-width: 0;
+            margin: 0;
             border-radius: 16px;
             overflow: hidden;
             background: #14161d;
@@ -339,22 +342,17 @@
             line-height: 1.5;
         }
         @media (max-width: 1100px) {
-            .gallery-fullscreen-wrapper.grid-mode .gallery-masonry { column-count: 3; }
+            /* Layar lebih kecil dari laptop namun lebih besar dari HP: 3 kolom. */
+            .gallery-fullscreen-wrapper.grid-mode .gallery-masonry { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         }
-        @media (max-width: 820px) {
-            /* HP: grid 2 kolom tetap — lebar kartu = (layar - padding - gap) / 2,
+        @media (max-width: 640px) {
+            /* HP: 2 kolom tetap — lebar kartu = (layar - padding - gap) / 2,
                jadi di layar kecil pun tetap 2 kolom dan menyesuaikan. */
             .gallery-fullscreen-wrapper.grid-mode .gallery-masonry {
-                display: grid;
                 grid-template-columns: repeat(2, minmax(0, 1fr));
-                /* tinggi tiap kartu ikut gambarnya masing-masing,
-                   tidak diratakan setinggi baris */
-                align-items: start;
                 gap: 16px;
-                column-count: initial;
                 padding: 24px 16px;
             }
-            .masonry-card { margin-bottom: 0; min-width: 0; }
             .masonry-info { padding: 12px 12px 14px; }
             .masonry-info h5 { font-size: 0.88rem; }
             .gallery-view-btn { padding: 8px 16px; font-size: 0.78rem; }
