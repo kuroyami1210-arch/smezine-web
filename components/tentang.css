@@ -613,18 +613,21 @@
                 display: block;
                 text-align: center;
                 background: linear-gradient(175deg, #172554 0%, #1d4ed8 55%, #1e40af 100%);
-                padding: 22px 20px 18px;
+                /* Full-bleed di HP: tanpa padding agar foto mentok ke tepi banner. */
+                padding: 0;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             }
             .hero-team-img {
-                display: inline-block;
+                display: block;
                 vertical-align: middle;
                 min-width: 0;
                 min-height: 0;
-                width: auto;
+                /* Selebar kotak, tinggi alami sampai batas, cover bila kepanjangan. */
+                width: 100%;
                 height: auto;
-                max-width: 90%;
-                max-height: 34vh;
+                max-width: 100%;
+                max-height: 46vh;
+                object-fit: cover;
                 object-position: center;
             }
             .trio-indicator-dots {
@@ -741,8 +744,8 @@
         }
         @media (max-width: 420px) {
             .hero-team-img {
-                max-height: 28vh;
-                max-width: 86%;
+                max-height: 44vh;
+                max-width: 100%;
             }
             .lead-big-img {
                 max-height: 32vh;
