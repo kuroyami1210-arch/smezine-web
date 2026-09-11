@@ -214,13 +214,20 @@ export default function TentangClient({
         ))}
       </div>
 
-      <div className="fullpage-scroll-container" ref={containerRef}>
+      <div className="fullpage-scroll-container" id="scrollContainer" ref={containerRef}>
         {/* slide 1 intro */}
         <section className="fullpage-slide-section active" id="sec-slide-0">
           <div className="slide-1-grid">
             <div className="slide-1-img-col">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={slide1.foto} alt="Slide 1" className="hero-team-img" />
+              <img
+                src={slide1.foto}
+                alt="Slide 1"
+                className="hero-team-img"
+                onError={(e) => {
+                  e.currentTarget.src = "https://www.pngmart.com/files/4/Haikyuu-PNG-Photos.png";
+                }}
+              />
             </div>
             <div className="slide-1-text-col">
               <h1><Judul text={judul} /></h1>
@@ -274,6 +281,9 @@ export default function TentangClient({
                 src={ketua ? ketua.foto : "https://www.pngmart.com/files/13/Aesthetic-Anime-Boy-PNG-Photo.png"}
                 alt={ketua ? ketua.nama : "Ketua Umum"}
                 className="lead-big-img"
+                onError={(e) => {
+                  e.currentTarget.src = "https://www.pngmart.com/files/13/Aesthetic-Anime-Boy-PNG-Photo.png";
+                }}
               />
             </div>
           </div>
@@ -316,12 +326,19 @@ export default function TentangClient({
               </div>
             </div>
 
-            <div className="slide-3-cards-col" ref={trackRef}>
+            <div className="slide-3-cards-col" id="membersCardsTrack" ref={trackRef}>
               {members.length > 0 ? (
                 members.map((a, i) => (
                   <div className="division-card-box" key={`${a.nama}-${i}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={a.foto} alt={a.nama} className="char-img-inner" />
+                    <img
+                      src={a.foto}
+                      alt={a.nama}
+                      className="char-img-inner"
+                      onError={(e) => {
+                        e.currentTarget.src = "https://via.placeholder.com/300x400?text=No+Image";
+                      }}
+                    />
                     <div className="division-caption">
                       <div className="d-tag">{a.jabatan}</div>
                       <h3>{a.nama}</h3>
