@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { createAnggota, updateAnggota } from "./actions";
 import "../../../components/admin.css";
+import ImageInput from "../../../components/ImageInput";
+import { MAX_BERITA_GALERI_ANGGOTA } from "../../../lib/upload-limits";
 
 const KATEGORI = [
   "divisi",
@@ -127,12 +129,10 @@ export default function AnggotaForm({
                 <img src={initial.fotoUrl} alt="Foto saat ini" style={{ maxWidth: 220, borderRadius: 8 }} />
               </div>
             )}
-            <input
+            <ImageInput
               id="foto"
-              type="file"
               name="foto"
-              className="form-control"
-              accept="image/jpeg,image/png,image/jpg,image/gif,image/webp"
+              maxBytes={MAX_BERITA_GALERI_ANGGOTA}
             />
             <div className="help-text">Opsional. Kosong = avatar inisial. Max 2MB.</div>
           </div>

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { createGaleri, updateGaleri } from "./actions";
 import "../../../components/admin.css";
+import ImageInput from "../../../components/ImageInput";
+import { MAX_BERITA_GALERI_ANGGOTA } from "../../../lib/upload-limits";
 
 export type GaleriInitial = {
   id?: number;
@@ -74,12 +76,10 @@ export default function GaleriForm({
                 <img src={initial.gambarUrl} alt="Gambar saat ini" style={{ maxWidth: "100%", borderRadius: 8 }} />
               </div>
             )}
-            <input
+            <ImageInput
               id="gambar"
-              type="file"
               name="gambar"
-              className="form-control"
-              accept="image/jpeg,image/png,image/jpg,image/gif,image/webp"
+              maxBytes={MAX_BERITA_GALERI_ANGGOTA}
               required={!editing}
             />
             <div className="help-text">jpeg, png, jpg, gif, atau webp. Max 2MB (otomatis jadi webp).</div>

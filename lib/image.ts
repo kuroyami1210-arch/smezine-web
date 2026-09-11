@@ -1,19 +1,17 @@
 import { randomUUID } from "node:crypto";
 import sharp from "sharp";
+import {
+  ALLOWED_MIME as ALLOWED_MIME_LIST,
+  MAX_BERITA_GALERI_ANGGOTA,
+  MAX_SLIDE1,
+} from "./upload-limits";
+
+export { MAX_BERITA_GALERI_ANGGOTA, MAX_SLIDE1 };
 
 // Aturan port dari Laravel:
-// - Berita/Galeri: max 2048KB. Slide1: max 5120KB (lihat TentangSlide1Controller).
+// - Berita/Galeri: max 2048KB. Slide1: 4MB (Laravel 5MB, diturunkan karena limit body Vercel).
 // - SVG DITOLAK di Next.js (tidak aman di-sharp ke webp) — perbedaan disengaja vs Laravel.
-const ALLOWED_MIME = new Set([
-  "image/jpeg",
-  "image/png",
-  "image/jpg",
-  "image/gif",
-  "image/webp",
-]);
-
-export const MAX_BERITA_GALERI_ANGGOTA = 2 * 1024 * 1024; // 2MB
-export const MAX_SLIDE1 = 5 * 1024 * 1024; // 5MB
+const ALLOWED_MIME = new Set<string>(ALLOWED_MIME_LIST);
 
 export type R2Folder = "berita" | "galeri" | "anggota" | "tentang_slide1";
 

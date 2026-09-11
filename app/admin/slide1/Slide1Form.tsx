@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { updateSlide1 } from "./actions";
 import "../../../components/admin.css";
+import ImageInput from "../../../components/ImageInput";
+import { MAX_SLIDE1 } from "../../../lib/upload-limits";
 
 export default function Slide1Form({ initial }: {
   initial: { judul: string; deskripsi: string; fotoUrl: string | null };
@@ -55,14 +57,8 @@ export default function Slide1Form({ initial }: {
                 <img src={initial.fotoUrl} alt="Foto saat ini" style={{ maxWidth: "100%", borderRadius: 8 }} />
               </div>
             )}
-            <input
-              id="foto"
-              type="file"
-              name="foto"
-              className="form-control"
-              accept="image/jpeg,image/png,image/jpg,image/gif,image/webp"
-            />
-            <div className="help-text">jpeg, png, jpg, gif, atau webp. Max 5MB (otomatis jadi webp).</div>
+            <ImageInput id="foto" name="foto" maxBytes={MAX_SLIDE1} />
+            <div className="help-text">jpeg, png, jpg, gif, atau webp. Max 4MB (otomatis jadi webp).</div>
           </div>
 
           <div className="btn-group">
